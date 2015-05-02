@@ -43,6 +43,15 @@ else
         echo ", OK"
 fi
 
+if [[ "$version" = "`cat usb/platform/VERSION`" ]]; then
+	echo "USB key already has latest platform version $version"
+	echo -n "unmounting ${usb}..."
+	umount "$usb" 2>/dev/null
+        echo " OK"
+	exit 1
+fi
+exit 2
+
 echo -n "Downloading latest platform ($platform_file)..."
 if ! curl -sk -o "$platform_file" "$platform_url" ; then
         echo " failed"
